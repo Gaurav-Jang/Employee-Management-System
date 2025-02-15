@@ -21,21 +21,30 @@ function App() {
   }, []);
 
   const handleLogin = (email, password) => {
-    if (email == "admin@gmail.com" && password == "123") {
+    //....
+    // get admin data from loacl storage
+    const storedAdmin = JSON.parse(localStorage.getItem("admin")) || [];
+    // validate admin credential
+    const adminUser = storedAdmin.find(
+      (admin) => admin.email === email && admin.password === password
+    );
+
+    // validate employe cred
+    const employee = userData.find(
+      (employee) => email == employee.email && employee.password == password
+    );
+    //..
+    if (adminUser) {
       setUser("admin");
+      setloggedInUserData(admin);
       localStorage.setItem("loggedInUser", JSON.stringify({ role: "admin" }));
-    } else if (userData) {
-      const employee = userData.find(
-        (e) => email == e.email && e.password == password
+    } else if (employee) {
+      setUser("employee");
+      setloggedInUserData(employee);
+      localStorage.setItem(
+        "loggedInUser",
+        JSON.stringify({ role: "employees", data: employee })
       );
-      if (employee) {
-        setUser("employee");
-        setloggedInUserData(employee);
-        localStorage.setItem(
-          "loggedInUser",
-          JSON.stringify({ role: "employees", data: employee })
-        );
-      }
     } else {
       alert("invalid Credintial");
     }

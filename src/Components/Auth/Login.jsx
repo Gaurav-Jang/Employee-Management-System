@@ -32,6 +32,7 @@ const Login = ({ handleLogin }) => {
             placeholder="Enter Your email"
           />
           <input
+            type="password"
             value={password}
             required
             onChange={(e) => {
